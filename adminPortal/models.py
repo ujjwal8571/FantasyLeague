@@ -5,14 +5,13 @@ from django import forms
 
 # Create your models here.
 
-class AdminUser(models.Model):
+class ConsumerUser(models.Model):
 
-    admin_user = models.OneToOneField(User)
-    admin_user_name = models.CharField(null=False,blank=False,max_length=15)
-    admin_password = models.CharField(null=False,blank=False,max_length=25)
+    consumer_user = models.OneToOneField(User)
+    consumer_is_admin = models.BooleanField(default=False)
 
-    def __unicode__(self):
-        return self.admin_user.username
+    def __str__(self):
+        return self.consumer_user.username
 
 
 class Player(models.Model):
@@ -46,7 +45,7 @@ class Player(models.Model):
     player_price = models.IntegerField(max_length=None)
     player_image = models.FileField(null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.player_last_name
 
 class PlayerScore(models.Model):
@@ -54,5 +53,5 @@ class PlayerScore(models.Model):
     player_score = models.IntegerField(max_length=None)
     player_is_powerplayer = models.BooleanField(default=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.player.player_last_name

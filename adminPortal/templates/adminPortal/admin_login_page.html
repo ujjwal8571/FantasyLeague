@@ -1,0 +1,22 @@
+
+{% extends 'adminPortal/base.html' %}
+
+{% block body %}
+{% csrf_token %}
+
+    <div class="login">
+	<h1>Login</h1>
+    <form method="POST" action="{% url 'admin_login' %}">
+    	<input type="text" name="username" placeholder="Username" required="required" />
+        <input type="password" name="password" placeholder="Password" required="required" />
+        <button type="submit" class="btn btn-primary btn-block btn-large">LOGIN</button>
+    </form>
+</div>
+
+{#    {% load staticfiles %}#}
+{#        <script src="{% static 'js/index.js' %}"></script>#}
+{#        <script src="{% static 'js/prefixfree.min.js' %}"></script>#}
+
+
+
+{% endblock %}
