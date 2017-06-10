@@ -17,7 +17,7 @@ class ConsumerUser(models.Model):
 class Player(models.Model):
     player_first_name = models.CharField(max_length=40)
     player_last_name = models.CharField(max_length=40)
-    player_id = models.IntegerField(auto_created=True)
+    player_id = models.IntegerField()
     player_age = models.IntegerField(max_length=None)
 
     player_country_choices = (
