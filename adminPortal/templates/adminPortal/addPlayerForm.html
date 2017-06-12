@@ -1,0 +1,59 @@
+{% extends 'adminPortal/base.html' %}
+
+{%block body%}
+
+{%csrf_token%}
+
+<form method="POST" action="{% url 'add_player' %}">
+Enter player first name:
+<input type="text" name="player_first_name">
+<br>
+
+Enter player last name:
+<input type="text" name="player_last_name">
+<br>
+
+Enter player age:
+<input type="text" name="player_age">
+<br>
+
+Enter player id:
+<input type="text" name="player_id">
+<br>
+
+Enter player price:
+<input type="text" name="player_price">
+<br>
+
+Select player country
+<select name="player_country">
+<option value="IND">IND</option>
+<option value="AUS">AUS</option>
+<option value="WI">WI</option>
+<option value="SA">SA</option>
+<option value="ENG">ENG</option>
+<option value="BAN">BAN</option>
+<option value="PAK">PAK</option>
+<option value="SL">SL</option>
+
+</select>
+
+
+<br>
+
+Enter player type
+
+<select name="player_type">
+<option value="BAT">BAT</option>
+<option value="BOWL">BOWL</option>
+<option value="WK">WK</option>
+<option value="ALL">ALL</option>
+</select>
+
+
+  <button type="submit" class="btn btn-primary btn-block btn-large">ADD PLAYER</button>
+</form>
+
+
+
+{%endblock%}

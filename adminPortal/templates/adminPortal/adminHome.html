@@ -1,0 +1,29 @@
+{% extends 'adminPortal/base.html' %}
+
+
+{% block body %}
+{% csrf_token %}
+
+Add player form
+<br>
+
+
+<form action="{% url 'add_player_form' %}">
+    <input type="submit" value="Add Player" />
+</form>
+
+<br>
+<br>
+
+Add admin form
+<br>
+<button type="button" name="Add admin" formaction="#TODO">Add Admin</button>
+
+<br><br>
+
+
+Update Player form
+<br>
+<button type="button" name="Update player" formaction="#TODO">Update Player</button>
+
+{% endblock %}

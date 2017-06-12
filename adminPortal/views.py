@@ -24,6 +24,17 @@ def admin_home(request):
         return HttpResponse("page not found")
 
 
+def add_player_form(request):
+    try:
+
+        return render(request, 'adminPortal/addPlayerForm.html',{})
+
+    except BaseException as e:
+        print(e)
+        return HttpResponse("page not found")
+
+
+
 @csrf_exempt
 def admin_login(request):
     try:
@@ -34,7 +45,7 @@ def admin_login(request):
             posted_password = request.POST['password']
 
             user = authenticate(username=posted_username,password=posted_password)
-
+            print(user)
             if user is None:
 
                 return HttpResponse("You are not a registered user")
@@ -47,11 +58,12 @@ def admin_login(request):
 
 
             login(request,user)
-            # return HttpResponseRedirect(reverse('#TODO'))
-            return HttpResponse("WELCOME BITCH, YOU BELONG HERE")
+            # return HttpResponseRedirect('adminPortal/adminHome.html')
+            return render(request, 'adminPortal/adminHome.html',{})
+            # return HttpResponse("WELCOME BITCH, YOU BELONG HERE")
 
     except BaseException as e:
-        print(e + sys. exc_tb.tb_lineno)
+        print(e)
         return HttpResponse("Invalid Access")
 
 
@@ -102,6 +114,7 @@ def add_admin_request(request):
         return None
 
 @login_required
+@csrf_exempt
 def add_player_request(request):
     try:
         if request.method == 'POST':
@@ -113,26 +126,29 @@ def add_player_request(request):
             player_type =request.POST['player_type']
             player_price =request.POST['player_price']
 
-            player_exists = Player.objects.get(player_id = player_id)
+            try:
+                player_exists = Player.objects.get(player_id = player_id)
+            except Player.DoesNotExist:
+                player_exists = None
 
             if player_exists:
-                return HttpResponse(request,"BITCH PLAYER ALREADY EXISTS",{})
+                return HttpResponse("BITCH PLAYER ALREADY EXISTS")
 
             new_player = add_new_player(player_first_name,player_last_name,player_age,player_id,player_country,player_type,player_price)
-
+            print(new_player)
             if new_player:
-                return HttpResponse(request,"player added is %s %s" %(player_first_name,player_last_name),{})
-
+                return HttpResponse("player added is %s %s" %(new_player.player_first_name,new_player.player_last_name))
+                # return HttpResponse("player added")
 
     except Exception as e:
-        print(e + sys.exc_tb.tb_lineno)
+        print(e)
         return None
 
 
 def add_new_player(player_first_name,player_last_name,player_age,player_id,player_country,player_type,player_price):
     try:
         new_player = Player()
-
+        print("hello")
         new_player.player_first_name = player_first_name
         new_player.player_last_name = player_last_name
         new_player.player_id = player_id
@@ -141,6 +157,7 @@ def add_new_player(player_first_name,player_last_name,player_age,player_id,playe
         new_player.player_country = player_country
         new_player.player_type = player_type
         new_player.save()
+        print(new_player)
         return new_player
 
     except Exception as e:
@@ -149,7 +166,7 @@ def add_new_player(player_first_name,player_last_name,player_age,player_id,playe
 
 
 @login_required
-def update_player(request):
+def update_player_request(request):
     try:
         if request.method == 'POST':
             player_first_name = request.POST['player_first_name']
